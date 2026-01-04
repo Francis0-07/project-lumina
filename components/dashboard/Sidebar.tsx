@@ -3,19 +3,21 @@
 import { LayoutDashboard, Users, CreditCard, Settings, Activity, Moon, Sun, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const items = [
-  { icon: LayoutDashboard, label: "Overview" },
-  { icon: Users, label: "Customers" },
-  { icon: CreditCard, label: "Transactions" },
-  { icon: Activity, label: "Activity" },
-  { icon: Settings, label: "Settings" },
+  { icon: LayoutDashboard, label: "Overview", href: "/" },
+  { icon: Users, label: "Customers", href: "/customers" },
+  { icon: CreditCard, label: "Transactions", href: "/transactions" },
+  { icon: Activity, label: "Activity", href: "/activity" },
+  { icon: Settings, label: "Settings", href: "/settings" },
 ];
 
 export function Sidebar() {
   const [isDark, setIsDark] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState("Overview");
+  const pathname = usePathname();
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
@@ -67,19 +69,20 @@ export function Sidebar() {
       </div>
       <nav className="space-y-1 flex-1">
         {items.map((item) => (
-          <button
+          <Link
             key={item.label}
-            onClick={() => setActiveItem(item.label)}
+            href={item.href}
+            onClick={() => setIsMobileOpen(false)}
             className={cn(
               "flex items-center gap-3 w-full px-4 py-2 text-sm font-medium rounded-md transition-colors",
-              activeItem === item.label
+              pathname === item.href
                 ? "bg-white dark:bg-zinc-800 text-indigo-600 shadow-sm" 
                 : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-zinc-800"
             )}
           >
             <item.icon className="h-4 w-4" />
             {item.label}
-          </button>
+          </Link>
         ))}
       </nav>
 
