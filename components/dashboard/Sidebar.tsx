@@ -1,6 +1,6 @@
 'use client';
 
-import { LayoutDashboard, Users, CreditCard, Settings, Activity, Moon, Sun, Menu, X } from "lucide-react";
+import { LayoutDashboard, Users, CreditCard, Settings, Activity, Moon, Sun, Menu, X, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -86,13 +86,21 @@ export function Sidebar() {
         ))}
       </nav>
 
-      <div className="border-t pt-4 dark:border-zinc-800">
+      <div className="border-t pt-4 dark:border-zinc-800 space-y-2">
         <button 
           onClick={toggleTheme}
           className="flex items-center gap-3 w-full px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-zinc-800 rounded-md transition-colors"
         >
           {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           {isDark ? "Light Mode" : "Dark Mode"}
+        </button>
+        
+        <button 
+          onClick={() => window.location.href = '/login'} // Mock logout
+          className="flex items-center gap-3 w-full px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 rounded-md transition-colors"
+        >
+          <LogOut className="h-4 w-4" />
+          Logout
         </button>
       </div>
     </div>
